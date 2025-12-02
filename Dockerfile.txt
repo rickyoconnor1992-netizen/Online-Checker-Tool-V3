@@ -1,20 +1,17 @@
-FROM python:3.11-slim
+# Use official Python image
+FROM python:3.12-slim
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    chromium \
-    chromium-driver \
-    wget \
-    unzip \
-    ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
-
+# Set working directory
 WORKDIR /app
+
+# Copy project files
 COPY . /app
 
+# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-ENV CHROME_BIN=/usr/bin/chromium
-ENV PORT=8080
+# Expose the port
+EXPOSE 10000
 
-EXPOSE 8080
+# Start the app
 CMD ["python", "app.py"]
